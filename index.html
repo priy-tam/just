@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You ❤️</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background:radial-gradient(circle at top,#3a0ca3,#000);
+  color:white;
+  overflow:hidden;
+}
+
+/* floating hearts */
+.heart{
+  position:fixed;
+  bottom:-20px;
+  color:pink;
+  font-size:20px;
+  animation:floatUp 6s linear infinite;
+}
+
+@keyframes floatUp{
+  from{transform:translateY(0); opacity:1;}
+  to{transform:translateY(-110vh); opacity:0;}
+}
+
+/* rose petals */
+.petal{
+  position:fixed;
+  top:-20px;
+  font-size:18px;
+  animation:fall 8s linear infinite;
+}
+
+@keyframes fall{
+  to{transform:translateY(110vh) rotate(360deg);}
+}
+
+/* main card */
+.card{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  text-align:center;
+  background:rgba(0,0,0,0.5);
+  padding:25px;
+  border-radius:20px;
+  width:90%;
+  max-width:400px;
+}
+
+button{
+  padding:12px 25px;
+  border:none;
+  border-radius:25px;
+  background:hotpink;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  margin-top:15px;
+}
+
+button:hover{transform:scale(1.05);}
+
+.hidden{display:none;}
+
+img{
+  width:50%;
+  border-radius:15px;
+  margin:10px 0;
+  box-shadow:0 0 20px pink;
+}
+
+#text{
+  margin-top:15px;
+  line-height:1.6;
+  min-height:120px;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music" src="music.mp3" loop></audio>
+
+<div class="card">
+  <h2>For You 💖</h2>
+  <p>Tap to open</p>
+  <button id="openBtn">Open</button>
+
+  <div id="content" class="hidden">
+    <img src="photo1.jpg">
+    <img src="photo2.jpg">
+    <div id="text"></div>
+  </div>
+</div>
+
+<script>
+const btn = document.getElementById("openBtn");
+const music = document.getElementById("music");
+const content = document.getElementById("content");
+const textBox = document.getElementById("text");
+
+const message = 
+"Tum meri zindagi ka wo hissa ho jahan se meri muskaan shuru hoti hai.\n\n" +
+"Tumhari ek smile meri saari thakaan mita deti hai.\n\n" +
+"Chahe duniya kuch bhi kahe,\nmain hamesha tumhare saath hoon.";
+
+let i = 0;
+
+btn.onclick = () => {
+  content.classList.remove("hidden");
+  btn.style.display="none";
+  music.play();
+  typeText();
+  hearts();
+  petals();
+};
+
+function typeText(){
+  if(i < message.length){
+    textBox.innerHTML += message.charAt(i) === "\n" ? "<br>" : message.charAt(i);
+    i++;
+    setTimeout(typeText,40);
+  }
+}
+
+function hearts(){
+  setInterval(()=>{
+    const h = document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+  },500);
+}
+
+function petals(){
+  setInterval(()=>{
+    const p = document.createElement("div");
+    p.className="petal";
+    p.innerHTML="🌹";
+    p.style.left=Math.random()*100+"vw";
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),8000);
+  },700);
+}
+</script>
+
+</body>
+</html>
